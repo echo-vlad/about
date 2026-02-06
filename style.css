@@ -1,10 +1,10 @@
 :root{
-  --bg: #f4f5f7;
-  --card: rgba(255,255,255,.85);
-  --text: #111214;
+  --bg:#f4f5f7;
+  --card: rgba(255,255,255,.92);
+  --text:#111214;
   --muted: rgba(17,18,20,.62);
   --line: rgba(17,18,20,.10);
-  --shadow: 0 18px 55px rgba(0,0,0,.10);
+  --shadow: 0 22px 60px rgba(0,0,0,.12);
   --radius: 18px;
 }
 
@@ -19,42 +19,62 @@ body{
   overflow:hidden;
 }
 
-/* ===== Background (minimal + dynamic, no circles) ===== */
-.bg{position:fixed; inset:0; z-index:-1}
+/* ===== Background ===== */
+.bg{
+  position:fixed;
+  inset:0;
+  z-index:-1;
+  overflow:hidden;
+}
 
+/* Subtle grid */
 .grid{
-  position:absolute; inset:0;
+  position:absolute;
+  inset:0;
   background-image:
-    linear-gradient(to right, rgba(0,0,0,.04) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(0,0,0,.04) 1px, transparent 1px);
-  background-size: 56px 56px;
+    linear-gradient(to right, rgba(0,0,0,.035) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(0,0,0,.035) 1px, transparent 1px);
+  background-size: 64px 64px;
   opacity:.65;
+  animation: gridFloat 30s ease-in-out infinite;
 }
 
+/* Slow diagonal light sweeps */
 .sheen{
-  position:absolute; inset:-30%;
-  background: linear-gradient(
-    115deg,
-    transparent 35%,
-    rgba(0,0,0,.06) 50%,
-    transparent 65%
-  );
-  animation: sweep 10s ease-in-out infinite;
-  transform: translateX(-12%) rotate(8deg);
+  position:absolute;
+  inset:-40%;
+  background:
+    linear-gradient(120deg,
+      transparent 38%,
+      rgba(0,0,0,.06) 50%,
+      transparent 62%),
+    linear-gradient(300deg,
+      transparent 42%,
+      rgba(0,0,0,.05) 54%,
+      transparent 66%);
+  animation: sheenDrift 24s ease-in-out infinite;
+  transform: rotate(6deg);
 }
 
-@keyframes sweep{
-  0%   {transform: translateX(-18%) rotate(8deg)}
-  50%  {transform: translateX(18%) rotate(8deg)}
-  100% {transform: translateX(-18%) rotate(8deg)}
-}
-
-/* subtle grain */
+/* Subtle grain */
 .noise{
-  position:absolute; inset:-20%;
-  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)' opacity='.18'/%3E%3C/svg%3E");
-  opacity:.25;
+  position:absolute;
+  inset:-20%;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)' opacity='.16'/%3E%3C/svg%3E");
+  opacity:.22;
   pointer-events:none;
+}
+
+@keyframes sheenDrift{
+  0%   {transform: translate(-6%, -4%) rotate(6deg)}
+  50%  {transform: translate(6%, 4%) rotate(6deg)}
+  100% {transform: translate(-6%, -4%) rotate(6deg)}
+}
+
+@keyframes gridFloat{
+  0%   {transform: translate(0,0)}
+  50%  {transform: translate(-10px, 12px)}
+  100% {transform: translate(0,0)}
 }
 
 /* ===== Layout ===== */
@@ -85,132 +105,110 @@ body{
   gap: 14px;
 }
 
-/* Keep badge rectangular (not circle) */
 .badge{
   width:46px;
   height:46px;
-  border-radius: 14px;
-  background: linear-gradient(135deg, rgba(0,0,0,.92), rgba(0,0,0,.55));
-  box-shadow: 0 10px 25px rgba(0,0,0,.10);
+  border-radius:14px;
+  background: linear-gradient(135deg, rgba(0,0,0,.95), rgba(0,0,0,.55));
 }
 
-/* If you use avatar image */
 .avatar{
   width:46px;
   height:46px;
-  border-radius: 14px;
+  border-radius:14px;
   object-fit: cover;
-  border: 1px solid rgba(0,0,0,.10);
-  background: rgba(255,255,255,.7);
+  border: 1px solid rgba(0,0,0,.12);
+  background: white;
 }
 
 .titles h1{
   margin:0;
-  font-size: 28px;
-  letter-spacing: -0.02em;
-  line-height: 1.1;
+  font-size:28px;
+  letter-spacing:-0.02em;
 }
 
 .subtitle{
   margin:6px 0 0;
-  color: var(--muted);
-  font-size: 14px;
+  font-size:14px;
+  color:var(--muted);
 }
 
 .divider{
   height:1px;
-  background: var(--line);
-  margin: 18px 0;
+  background:var(--line);
+  margin:18px 0;
 }
 
 /* ===== Info row ===== */
 .row{
   display:grid;
-  grid-template-columns: 76px 1fr;
-  gap: 12px;
+  grid-template-columns: 80px 1fr;
   align-items:center;
-  padding: 8px 0 6px;
+  gap:12px;
 }
 
 .label{
-  color: var(--muted);
-  font-size: 12px;
-  letter-spacing:.10em;
-  text-transform: uppercase;
+  font-size:12px;
+  letter-spacing:.12em;
+  text-transform:uppercase;
+  color:var(--muted);
 }
 
-.value{
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap: 10px;
-}
-
-/* Email is a non-clickable pill */
 .email{
-  color: var(--text);
-  font-size: 15px;
-  padding: 10px 12px;
-  border-radius: 14px;
-  border: 1px solid rgba(0,0,0,.10);
-  background: rgba(255,255,255,.9);
-  user-select: text;
+  display:inline-block;
+  padding:10px 12px;
+  border-radius:14px;
+  border:1px solid rgba(0,0,0,.10);
+  background:white;
+  font-size:15px;
+  user-select:text;
 }
 
 /* ===== Actions ===== */
 .actions{
   display:flex;
-  gap: 10px;
-  margin-top: 14px;
-  flex-wrap:wrap;
+  gap:10px;
+  margin-top:16px;
 }
 
 .btn{
-  appearance:none;
-  border: 1px solid rgba(0,0,0,.12);
-  background: rgba(255,255,255,.85);
-  color: var(--text);
-  padding: 10px 14px;
-  border-radius: 14px;
+  padding:10px 14px;
+  border-radius:14px;
+  font-size:14px;
+  border:1px solid rgba(0,0,0,.14);
+  background:white;
+  color:var(--text);
   cursor:pointer;
-  font-size: 14px;
-  transition: transform .12s ease, background .12s ease, border-color .12s ease;
+  text-decoration:none;
+  transition: transform .12s ease, background .12s ease;
 }
 
 .btn:hover{
   transform: translateY(-1px);
-  border-color: rgba(0,0,0,.18);
-  background: rgba(255,255,255,1);
 }
 
 .btn.primary{
-  background: rgba(0,0,0,.92);
-  color: white;
-  border-color: rgba(0,0,0,.92);
+  background:#111214;
+  color:white;
+  border-color:#111214;
 }
 
-.btn.primary:hover{
-  background: rgba(0,0,0,.80);
-  border-color: rgba(0,0,0,.80);
-}
-
-/* ===== Footer / hint ===== */
+/* ===== Footer ===== */
 .hint{
-  min-height: 18px;
-  margin: 12px 2px 0;
-  color: rgba(17,18,20,.70);
-  font-size: 13px;
+  min-height:18px;
+  margin-top:12px;
+  font-size:13px;
+  color:rgba(17,18,20,.7);
 }
 
 .foot{
-  color: rgba(17,18,20,.55);
-  font-size: 12px;
-  user-select:none;
+  font-size:12px;
+  color:rgba(17,18,20,.55);
 }
 
 .clock{
-  padding: 8px 10px;
-  border-radius: 14px;
-  border: 1px solid rgba(0,0,0,.10);
-  background: rgba(255,255,255,.70);
+  padding:8px 10px;
+  border-radius:14px;
+  border:1px solid rgba(0,0,0,.10);
+  background:white;
 }
