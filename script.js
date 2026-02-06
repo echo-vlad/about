@@ -5,9 +5,9 @@ const hint = document.getElementById("hint");
 const clock = document.getElementById("clock");
 
 function setHint(text) {
+  if (!hint) return;
   hint.textContent = text;
   if (!text) return;
-  // Clear after a moment
   window.clearTimeout(setHint._t);
   setHint._t = window.setTimeout(() => (hint.textContent = ""), 2200);
 }
@@ -17,7 +17,6 @@ async function copyEmail() {
     await navigator.clipboard.writeText(EMAIL);
     setHint("Copied to clipboard.");
   } catch {
-    // Fallback for older browsers
     const ta = document.createElement("textarea");
     ta.value = EMAIL;
     ta.style.position = "fixed";
@@ -28,21 +27,22 @@ async function copyEmail() {
       document.execCommand("copy");
       setHint("Copied to clipboard.");
     } catch {
-      setHint("Copy failed. You can select the email and copy it manually.");
+      setHint("Copy failed. You can select and copy manually.");
     } finally {
       document.body.removeChild(ta);
     }
   }
 }
 
-copyBtn.addEventListener("click", copyEmail);
+if (copyBtn) copyBtn.addEventListener("click", copyEmail);
 
-// Simple local clock for a “rich” feel
 function tick() {
+  if (!clock) return;
   const d = new Date();
   const hh = String(d.getHours()).padStart(2, "0");
   const mm = String(d.getMinutes()).padStart(2, "0");
   clock.textContent = `Local time: ${hh}:${mm}`;
 }
+
 tick();
 setInterval(tick, 1000 * 10);
