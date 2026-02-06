@@ -22,9 +22,7 @@
   <main class="wrap">
     <section class="card" role="region" aria-label="Business card">
       <div class="top">
-        <!-- Profile picture (upload vlad_profile_transparent.png to repo root) -->
-        <img class="avatar" src="vlad_profile_transparent.png" alt="Vlad Creanga" />
-
+        <div class="badge" aria-hidden="true"></div>
         <div class="titles">
           <h1>Vlad Creanga</h1>
           <p class="subtitle">Digital business card</p>
@@ -36,8 +34,9 @@
       <div class="row">
         <div class="label">Email</div>
         <div class="value">
-          <!-- Not clickable -->
-          <span class="email" id="emailText">creanga_v@yahoo.com</span>
+          <a class="email" href="mailto:creanga_v@yahoo.com" id="emailLink">
+            creanga_v@yahoo.com
+          </a>
         </div>
       </div>
 
@@ -45,7 +44,9 @@
         <button class="btn primary" id="copyBtn" type="button">
           Copy email
         </button>
-        <!-- Removed "Send email" button since email shouldn't be clickable -->
+        <a class="btn" href="mailto:creanga_v@yahoo.com">
+          Send email
+        </a>
       </div>
 
       <p class="hint" id="hint" aria-live="polite"></p>
