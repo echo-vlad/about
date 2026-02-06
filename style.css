@@ -75,11 +75,18 @@ body{
 }
 
 .top{display:flex; align-items:center; gap:14px}
-.badge{
-  width:44px; height:44px; border-radius:14px;
-  background: linear-gradient(135deg, rgba(120,148,255,.9), rgba(255,120,196,.9));
-  box-shadow: 0 10px 30px rgba(120,148,255,.18);
+
+/* NEW: profile picture avatar (replaces .badge) */
+.avatar{
+  width:44px;
+  height:44px;
+  border-radius:14px;
+  object-fit: cover;
+  background: rgba(255,255,255,.06);
+  border: 1px solid rgba(255,255,255,.14);
+  box-shadow: 0 10px 30px rgba(0,0,0,.18);
 }
+
 .titles h1{
   margin:0;
   font-size: 28px;
@@ -117,20 +124,23 @@ body{
   justify-content:space-between;
   gap: 10px;
 }
+
+/* Email pill (now a <span>, not clickable) */
 .email{
   color: var(--text);
-  text-decoration:none;
   font-size: 16px;
   padding: 8px 10px;
   border-radius: 12px;
   border: 1px solid rgba(255,255,255,.12);
   background: rgba(0,0,0,.10);
-  transition: transform .15s ease, border-color .15s ease, background .15s ease;
+  user-select: text;
 }
+
+/* Remove hover lift since it's not a link anymore */
 .email:hover{
-  transform: translateY(-1px);
-  border-color: rgba(255,255,255,.22);
-  background: rgba(0,0,0,.16);
+  border-color: rgba(255,255,255,.12);
+  background: rgba(0,0,0,.10);
+  transform: none;
 }
 
 .actions{
